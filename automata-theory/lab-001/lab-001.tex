@@ -1,0 +1,80 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[a4paper, includeheadfoot, mag=1000, left=2cm, right=1.5cm, top=1.5cm, bottom=1.5cm, headsep=0.8cm, footskip=0.8cm]{geometry}
+% Fonts
+\usepackage{fontspec, unicode-math}
+\setmainfont[Ligatures=TeX]{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[english, russian]{babel}
+% Indent first paragraph
+\usepackage{indentfirst}
+\setlength{\parskip}{5pt}
+% Diagrams
+\usepackage{graphicx}
+\usepackage{float}
+% Page headings
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%\newfontfamily\namefont[Scale=1.2]{Gloria Hallelujah}
+\fancyhead{}
+
+
+\usepackage{listings}
+\lstdefinestyle{lablisting}{
+  basicstyle=\scriptsize\ttfamily,
+  numbers=left,
+  stepnumber=1,
+  otherkeywords={EOF, O\_RDONLY, STDIN\_FILENO, STDOUT\_FILENO, STDERR\_FILENO},
+  numbersep=10pt,
+  showspaces=false,
+  showstringspaces=false
+}
+
+\newcommand{\specialcell}[2][l]{%
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+\begin{center}
+
+\textsc{Национальный исследовательский университет ИТМО\\[4mm]
+Факультет программной инженерии и компьютерной техники}
+\vfill
+\textbf{Практическое задание №1\\[4mm]
+по дисципение Теория Автоматов\\[4mm]
+Взаимная транспозиция автоматов Мили и Мура\\[16mm]
+}
+\begin{flushright}
+Студент: Саржевский Иван
+\\[2mm]Группа: P3302
+\\[2mm]Преподаватель: Тропченко Александр Ювенальевич
+\end{flushright}
+\vfill
+г. Санкт-Петербург\\[2mm]
+2020 г.
+
+\end{center}
+\end{titlepage}
+
+\section*{Цель}
+
+Практическое освоение методов взаимного преобразования автоматных моделей
+Мили и Мура. Проверка абстрактных автоматов Мили и Мура на эквивалентность.
+
+\section*{Задание}
+
+Исходный абстрактный автомат задан графическим способом. При переходе от
+автомата Мура (A) к автомату Мили (B):
+$$S_A = (A_A, Z_A, W_A, \delta_A, \lambda_A, a_{1A}) \to S_B = (A_B, Z_B, W_B, \delta_B, \lambda_B, a_{1B})$$
+и наоборот:
+$$S_B = (A_B, Z_B, W_B, \delta_B, \lambda_B, a_{1B}) \to S_A = (A_A, Z_A, W_A, \delta_A, \lambda_A, a_{1A})$$
+
+При этом их входные и выходные алфавиты должны совпадать:
+$$Z_A = Z_B; W_A = W_B$$
+
+\section*{Ход работы}
+
+\end{document}
