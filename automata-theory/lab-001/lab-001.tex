@@ -19,6 +19,9 @@
 %\newfontfamily\namefont[Scale=1.2]{Gloria Hallelujah}
 \fancyhead{}
 
+\usepackage{amsmath}
+
+\graphicspath{ {images/} }
 
 \usepackage{listings}
 \lstdefinestyle{lablisting}{
@@ -45,8 +48,9 @@
 \vfill
 \textbf{Практическое задание №1\\[4mm]
 по дисципение Теория Автоматов\\[4mm]
-Взаимная транспозиция автоматов Мили и Мура\\[16mm]
+Взаимная транспозиция автоматов Мили и Мура\\[4mm]
 }
+\textit{Вариант 11\\[16mm]}
 \begin{flushright}
 Студент: Саржевский Иван
 \\[2mm]Группа: P3302
@@ -75,6 +79,29 @@ $$S_B = (A_B, Z_B, W_B, \delta_B, \lambda_B, a_{1B}) \to S_A = (A_A, Z_A, W_A, \
 При этом их входные и выходные алфавиты должны совпадать:
 $$Z_A = Z_B; W_A = W_B$$
 
-\section*{Ход работы}
+\section*{Исходные данные}
+
+Вариант 11.
+
+\begin{center}
+\includegraphics[scale=2.0]{input-graph}\\
+\end{center}
+
+\noindent $S_B = (A_B, Z_B, W_B, \delta_B, \lambda_B, a_{1B})$\\
+$A_B = \{a_1, a_2, a_3, a_4, a_5\}$\\
+$Z_B = \{z_1, z_2\}$\\
+$W_B = \{w_1, w_2\}$\\
+
+\section*{Переход от автомата Мили к автомату Мура}
+
+\subsection*{Определим множества A}
+
+\noindent $A_1 = \{a_1W_1, a_1W_2\}$\\
+$A_2 = \{a_2W_1, a_2W_2\}$\\
+$A_3 = \{a_3W_2\}$\\
+$A_4 = \{a_4W_2\}$\\
+$A_5 = \{a_5W_1, a_5W_2\}$
+
+\subsection*{Присвоим b}
 
 \end{document}
