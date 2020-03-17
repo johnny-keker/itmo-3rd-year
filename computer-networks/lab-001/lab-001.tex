@@ -31,6 +31,8 @@
   showstringspaces=false
 }
 
+\graphicspath{ {images/} }
+
 \newcommand{\specialcell}[2][l]{%
   \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
@@ -81,5 +83,23 @@
     \texttt{00101110}
   }
 \end{tabular}
+
+\subsection*{Физическое кодирование}
+
+\subsubsection*{Определение частот}
+
+Возьмем за основу разложение бесконечного сигнала \texttt{1010101010}... в ряд
+Фурье.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.25]{one_zero}
+    \caption{График сигнала бесконечного \texttt{10101010...}}
+  \end{center}
+\end{figure}
+
+Его первые 4 гармоники:
+$$A_0 \sin(2 \pi F_0 t) + (A_0 / 3) \sin(2 \pi 3 F_0 t) +
+  (A_0 / 5) \sin(2 \pi 5 F_0 t) + (A_0 / 7) \sin(2 \pi 7 F_0 t)$$
 
 \end{document}
