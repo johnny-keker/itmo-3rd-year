@@ -90,8 +90,7 @@ from utils import *
 методов кодирования, выбрать и обосновать наилучший метод для передачи исходного
 сообщения.
 
-\section{Ход работы}
-\subsection{Формирование сообщения}
+\section{Формирование сообщения}
 
 \begin{tabular}{ l l }
   \textit{Сообщение:} & \texttt{Саржевский И.А.} \\
@@ -104,9 +103,9 @@ from utils import *
   \textit{Длина:} & 15 байт (120 бит)
 \end{tabular}
 
-\subsection{Физическое кодирование}
+\section{Физическое кодирование}
 
-\subsubsection{Выделение основной частоты}
+\subsection{Выделение основной частоты}
 
 Определим частоту основной гармоники бесконечного сигнала \texttt{10101010...}
 как базовую частоту $f_0$. В таком случае, частоту основной гармоники сигнала
@@ -139,7 +138,7 @@ $f_0 = 1 / T_0$ \\
   1000 & $0.5 * 10^9$
 \end{tabular}
 
-\subsubsection{Потенциальный код NRZ}
+\subsection{Потенциальный код NRZ}
 
 \begin{figure}[h]
   \begin{center}
@@ -197,5 +196,6 @@ mes_len = len(nrz_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
 \end{pycode}
+
 
 \end{document}
