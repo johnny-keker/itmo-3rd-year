@@ -43,9 +43,9 @@
   \multicolumn{2}{|c|}{Пропускная способность: #1 Mbps} \\
   \hline
   Частота основной гармоники сигнала \texttt{11111...} & 0 Гц \\
-  Верхняя граница частот в передаваемом сообщении & \py{max_mult * f_0[#1]} Гц \\
-  Нижняя граница частот в передаваемом сообщении & \py{f_0[#1] / max_count} Гц \\
-  Необходимая полоса пропускания & \py{f_0[#1] / max_count} : \py{max_mult * f_0[#1]} Гц \\
+  Верхняя граница частот в передаваемом сообщении & \py{int(max_mult * f_0[#1])} Гц \\
+  Нижняя граница частот в передаваемом сообщении & \py{int(f_0[#1] / max_count)} Гц \\
+  Необходимая полоса пропускания & \py{int(f_0[#1] / max_count)} : \py{int(max_mult * f_0[#1])} Гц \\
 }
 
 \begin{document}
@@ -182,5 +182,10 @@ $$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_
   \hline
 \end{tabular}
 
+\subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
+
+\begin{pycode}
+build_occurrence_table(get_occurrence_counts(nrz_string))
+\end{pycode}
 
 \end{document}
