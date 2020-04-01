@@ -55,3 +55,13 @@ def build_occurrence_table(occurrence, certain_tokens = False):
     cur_index += 1
   print('\hline')
   print('\\end{tabular}')
+
+def get_f_mean_math(occurrence, mes_len):
+  f_mean_str = "$$f_{mean} = "
+  cur_index = 1
+  for key in occurrence:
+    f_mean_str += f"{occurrence[key]} / {mes_len} * f_{cur_index} + "
+    cur_index += 1
+  f_mean_str = f_mean_str[:-3] + "$$"
+  return f_mean_str
+

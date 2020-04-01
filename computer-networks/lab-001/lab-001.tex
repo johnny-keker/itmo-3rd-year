@@ -185,7 +185,13 @@ $$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_
 \subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
 
 \begin{pycode}
-build_occurrence_table(get_occurrence_counts(nrz_string))
+occurrence = get_occurrence_counts(nrz_string)
+build_occurrence_table(occurrence)
+\end{pycode}
+
+\begin{pycode}
+mes_len = len(nrz_string)
+print(get_f_mean_math(occurrence, mes_len))
 \end{pycode}
 
 \end{document}
