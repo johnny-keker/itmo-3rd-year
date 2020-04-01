@@ -65,3 +65,25 @@ def get_f_mean_math(occurrence, mes_len):
   f_mean_str = f_mean_str[:-3] + "$$"
   return f_mean_str
 
+def get_f_mean(occurrence, mes_len, f_0, certain_tokens = False):
+  res = 0
+  for key in occurrence:
+    l = len(key) if certain_tokens else key
+    res += occurrence[key] / mes_len * f_0 / l
+  return int(res)
+
+def get_f_mean_table(occurrence, mes_len, certain_tokens = False):
+  print('\\begin{center}')
+  print('\\begin{tabular}{| c | c |}')
+  print('\hline')
+  print('Пропускная способность, Mbps & $f_{mean}$, Гц \\\\')
+  print('\hline')
+  print(f'10 & {get_f_mean(occurrence, mes_len, f_0[10], certain_tokens)} \\\\')
+  print(f'100 & {get_f_mean(occurrence, mes_len, f_0[100], certain_tokens)} \\\\')
+  print(f'1000 & {get_f_mean(occurrence, mes_len, f_0[1000], certain_tokens)} \\\\')
+  print('\hline')
+  print('\\end{tabular}')
+  print('\\end{center}')
+
+
+
