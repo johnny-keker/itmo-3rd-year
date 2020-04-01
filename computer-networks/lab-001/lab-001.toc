@@ -1,0 +1,8 @@
+\babel@toc {russian}{}
+\contentsline {section}{\numberline {1}Цель}{2}
+\contentsline {section}{\numberline {2}Задание}{2}
+\contentsline {section}{\numberline {3}Ход работы}{2}
+\contentsline {subsection}{\numberline {3.1}Формирование сообщения}{2}
+\contentsline {subsection}{\numberline {3.2}Физическое кодирование}{2}
+\contentsline {subsubsection}{\numberline {3.2.1}Выделение основной частоты}{2}
+\contentsline {subsubsection}{\numberline {3.2.2}Потенциальный код NRZ}{3}
