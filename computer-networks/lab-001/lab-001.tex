@@ -18,6 +18,8 @@
 \setlength{\headheight}{16pt}
 %\newfontfamily\namefont[Scale=1.2]{Gloria Hallelujah}
 \fancyhead{}
+% Python
+\usepackage{pythontex}
 
 
 \usepackage{listings}
@@ -36,17 +38,21 @@
 \newcommand{\specialcell}[2][l]{%
   \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
-\newcommand{\bandwidthEntry}[4]{
+\newcommand{\bandwidthEntry}[1]{
   \hline
   \multicolumn{2}{|c|}{Пропускная способность: #1 Mbps} \\
   \hline
-  Частота основной гармоники сигнала \texttt{11111...} & #2 Гц \\
-  Верхняя граница частот в передаваемом сообщении & #3 Гц \\
-  Нижняя граница частот в передаваемом сообщении & #4 Гц \\
-  Необходимая полоса пропускания & #3 - #4 Гц \\
+  Частота основной гармоники сигнала \texttt{11111...} & 0 Гц \\
+  Верхняя граница частот в передаваемом сообщении & \py{max_mult * f_0[#1]} Гц \\
+  Нижняя граница частот в передаваемом сообщении & \py{f_0[#1] / max_count} Гц \\
+  Необходимая полоса пропускания & \py{f_0[#1] / max_count} : \py{max_mult * f_0[#1]} Гц \\
 }
 
 \begin{document}
+
+\begin{pycode}
+from utils import *
+\end{pycode}
 
 % Title page
 \begin{titlepage}
@@ -87,7 +93,7 @@
 \begin{tabular}{ l l }
   \textit{Сообщение:} & \texttt{Саржевский И.А.} \\
   \textit{Hex-код:} & \texttt{D1 E0 F0 E6 E5 E2 F1 EA E8 E9 20 C8 2E C0 2E} \\
-  \textit{Bin-код:} & \specialcell[l]{ 
+  \textit{Bin-код:} & \specialcell[l]{
     \texttt{11010001 11100000 11110000 11100110 11100101 11100010 11110001} \\
     \texttt{11101010 11101000 11101001 00100000 11001000 00101110 11000000} \\
     \texttt{00101110}
@@ -139,11 +145,19 @@ $f_0 = 1 / T_0$ \\
   \end{center}
 \end{figure}
 
+\begin{pycode}
+nrz_string = '11010001111000001111000011100110111001011110001011110001111010'\
+  '1011101000111010010010000011001000001011101100000000101110'
+[max_count, max_char] = longest_substing(nrz_string)
+max_mult = 7
+\end{pycode}
+
 Из диаграммы легко понять, что $T_{min}$ достигается при кодировании чередующихся
 сигналов, из чего следует, что $T_{min} = T_0$ и $f_{max} = f_0$. Для определения
 $T_{max}$ найдем участок с минимальным чередованием. Для данного вида кодирования
-такой участок достигается при передаче последовательности из восьми нулей,
-следовательно $T_{max} = 8T$, а $f_{min} = \frac{f_0}{8}$.
+такой участок достигается при передаче последовательности из \py{max_count}
+символов \texttt{\py{max_char}},
+следовательно $T_{max} = \py{max_count} T_0$, а $f_{min} = \frac{f_0}{\py{max_count}}$.
 
 Разложение в ряд Фурье для сигнала представляющего из себя последовательность
 чередующихся единиц и нулей будет иметь вид:
@@ -152,19 +166,19 @@ $$A_0 \sin(2 \pi f_0 t) + (A_0 / 3) \sin(2 \pi 3 f_0 t) +
   (A_0 / 5) \sin(2 \pi 5 f_0 t) + (A_0 / 7) \sin(2 \pi 7 f_0 t)$$
 
 Аналогичное разложение для сигнала с чередующимися последовательностями из
-восьми единиц и нулей будет иметь вид:
+\py{max_count} единиц и нулей будет иметь вид:
 
-$$A_0 \sin(2 \pi \frac{f_0}{8} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_0}{8} t) +
-  (A_0 / 5) \sin(2 \pi \frac{5 f_0}{8} t) + (A_0 / 7) \sin(2 \pi \frac{7 f_0}{8} t)$$
+$$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_0}{\py{max_count}} t) +
+  (A_0 / 5) \sin(2 \pi \frac{5 f_0}{\py{max_count}} t) + (A_0 / 7) \sin(2 \pi \frac{7 f_0}{\py{max_count}} t)$$
 
-Получаем спектр частот $\frac{f_0}{8}...7 f_0$.
+Получаем спектр частот $\frac{f_0}{\py{max_count}}...7 f_0$.
 
 \newpage
 
 \begin{tabular}{| c | c |}
-  \bandwidthEntry{10}{0}{0}{0}
-  \bandwidthEntry{100}{0}{0}{0}
-  \bandwidthEntry{1000}{0}{0}{0}
+  \bandwidthEntry{10}
+  \bandwidthEntry{100}
+  \bandwidthEntry{1000}
   \hline
 \end{tabular}
 
