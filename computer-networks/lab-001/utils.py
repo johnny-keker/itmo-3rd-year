@@ -6,6 +6,25 @@ f_0 = {
   1000: 0.5 * 10**9
 }
 
+table_4b5b = {
+  '0000' : '11110',
+  '0001' : '01001',
+  '0010' : '10100',
+  '0011' : '10101',
+  '0100' : '01010',
+  '0101' : '01011',
+  '0110' : '01110',
+  '0111' : '01111',
+  '1000' : '10010',
+  '1001' : '10011',
+  '1010' : '10110',
+  '1011' : '10111',
+  '1100' : '11010',
+  '1101' : '11011',
+  '1110' : '11100',
+  '1111' : '11101'
+}
+
 def longest_substing(s):
   list_0 = re.findall('0+', s)
   max_0 = max([len(x) for x in list_0])
@@ -110,4 +129,21 @@ def get_f_mean_table(occurrence, mes_len, certain_tokens = False, f_0_mult = Non
   print('\hline')
   print('\\end{tabular}')
   print('\\end{center}')
+
+def convert_4b5b(s):
+  i = 0
+  res = ""
+  while i != len(s):
+    res += table_4b5b[s[i:i+4]]
+    i += 4
+  return res
+
+def build_4b5b_table():
+  print('\\begin{tabular}{| c | c | c | c |}')
+  print('\hline')
+  keys = list(table_4b5b.keys())
+  for i in range(len(table_4b5b.keys()) // 2):
+    print(f'{keys[i]} & {table_4b5b[keys[i]]} & {keys[i+8]} & {table_4b5b[keys[i+8]]} \\\\')
+    print('\hline')
+  print('\\end{tabular}')
 
