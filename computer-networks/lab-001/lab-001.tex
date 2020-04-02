@@ -250,4 +250,108 @@ mes_len = len(man_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len, True, [2, 1])
 \end{pycode}
+
+\newpage
+
+\subsection{Потенциальный код RZ}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{rz}
+    \caption{Кодирование первых четырех байт потенциальным кодом RZ}
+  \end{center}
+\end{figure}
+
+\begin{pycode}
+nz_string = '11010001111000001111000011100110111001011110001011110001111010101'\
+  '1101000111010010010000011001000001011101100000000101110'
+max_count = 1
+max_mult = 14
+\end{pycode}
+
+Из диаграммы легко понять, что $T_{min}$ достигается при кодировании последовательных
+одинаковых бит (\texttt{00} или \texttt{11}), при этом $T_{min} = T_0 / 2$ 
+и $f_{max} = 2 f_0$. $T_{max}$ возникает в следствие кодирования чередующихся
+бит (\texttt{01} и \texttt{10}) и равен $f_0$. Сигнал вида \texttt{11111...} или
+\texttt{00000...} аналогичен последовательности сигналов \texttt{11}, следовательно
+частота его основной гармоники равна $f_{max}$.
+
+Разложение в ряд Фурье для сигнала представляющего из себя последовательность
+единиц или нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi 2 f_0 t) + (A_0 / 3) \sin(2 \pi 6 f_0 t) +
+  (A_0 / 5) \sin(2 \pi 10 f_0 t) + (A_0 / 7) \sin(2 \pi 14 f_0 t)$$
+
+Аналогичное разложение для сигнала с чередующимися последовательностями из
+единиц и нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi f_0 t) + (A_0 / 3) \sin(2 \pi 3 f_0 t) +
+  (A_0 / 5) \sin(2 \pi 5 f_0 t) + (A_0 / 7) \sin(2 \pi 7 f_0 t)$$
+
+Получаем спектр частот $f_0 ... 14 f_0$
+
+\begin{tabular}{| c | c |}
+  \bandwidthEntry{10}{2}
+  \bandwidthEntry{100}{2}
+  \bandwidthEntry{1000}{2}
+  \hline
+\end{tabular}
+
+\subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
+
+
+\begin{pycode}
+#occurrence = get_certain_tokens_occerrence(man_string, [['11', '00'], ['10', '01']])
+occurrence = f_mean_man_nz(man_string)
+build_occurrence_table(occurrence, True, [2, 1])
+
+mes_len = len(man_string)
+print(get_f_mean_math(occurrence, mes_len))
+get_f_mean_table(occurrence, mes_len, True, [2, 1])
+\end{pycode}
+
+\subsection{Пятиуровневый код PAM-5}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{pam}
+    \caption{Кодирование первых четырех байт потенциальным кодом 2BQ1 (PAM-5)}
+  \end{center}
+\end{figure}
+
+\begin{pycode}
+pam_string = '1101000111100000111100001110011011100101111000101111000111101010'\
+  '11101000111010010010000011001000001011101100000000101110'
+max_count = 14
+max_mult = 3.5
+\end{pycode}
+
+$T_{max}$ достигается на участке \texttt{11101010111010} и равен $14 T_0$,
+следовательно $f_{min} = f_0 / 14$. $T_{min}$ достигается на участках с
+чередованием \texttt{11} и \texttt{00} и равна $2 T_0$, следовательно
+$f_{max} = f_0 / 2$. Сигналы вида \texttt{111111...} и \texttt{000000...}
+выраждаются в прямую линию, поэтому частота в этом случае равна 0.
+
+Разложение в ряд Фурье для сигнала, имеющего период $T_{min}$ будет иметь вид:
+
+$$A_0 \sin(2 \pi \frac{f_0}{2} t) + (A_0 / 3) \sin(2 \pi 3 \frac{f_0}{2} t) +
+  (A_0 / 5) \sin(2 \pi 5 \frac{f_0}{2} t) + (A_0 / 7) \sin(2 \pi 7 \frac{f_0}{2} t)$$
+
+Аналогичное разложение для сигнала с периодом $T_{max}$:
+
+$$A_0 \sin(2 \pi \frac{f_0}{14} t) + (A_0 / 3) \sin(2 \pi 3 \frac{f_0}{14} t) +
+  (A_0 / 5) \sin(2 \pi 5 \frac{f_0}{14} t) + (A_0 / 7) \sin(2 \pi 7 \frac{f_0}{14} t)$$
+
+Получаем спектр частот $f_0 / 14 ... 3.5 f_0$
+
+\begin{tabular}{| c | c |}
+  \bandwidthEntry{10}{0}
+  \bandwidthEntry{100}{0}
+  \bandwidthEntry{1000}{0}
+  \hline
+\end{tabular}
+
+\subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
+TODO: разобраться как его посчитать
+
 \end{document}
