@@ -18,15 +18,17 @@ def longest_substing(s):
   else:
     return [max_1, '1']
 
-def get_occurrence_counts(s, tokens = None):
-  tokens_provided = tokens != None
+
+def get_occurrence_counts(s, token_groups = None):
+  tokens_provided = token_groups != None
   subs = []
   if not tokens_provided:
     subs += re.findall('0+', s)
     subs += re.findall('1+', s)
   else:
-    for token in tokens:
-      subs += re.findall(token, s)
+    for token_group in token_groups:
+      subs += re.findall(token_group[1], s)
+      subs += re.findall(token_group[0], s)
 
   res = {}
   for token in subs:
@@ -35,9 +37,31 @@ def get_occurrence_counts(s, tokens = None):
       res[key] += len(token)
     else:
       res[key] = len(token)
+  if tokens_provided:
+    for token_group in token_groups:
+      if res.get(token_group[0]) and res.get(token_group[1]):
+        res[f"{token_group[0]} и {token_group[1]}"] = res[token_group[0]] + res[token_group[1]]
+        del res[token_group[0]]
+        del res[token_group[1]]
   return res
 
-def build_occurrence_table(occurrence, certain_tokens = False):
+def f_mean_man_nz(s):
+  prev = '-'
+  s = s + s[0]
+  c1 = 0
+  c2 = 0
+  for c in s:
+    if (c == prev):
+        c1 = c1 + 1
+    elif (prev != '-'):
+        c2 = c2 + 1
+    prev = c
+  res = {}
+  res['11 и 00'] = c1
+  res['1 и 0'] = c2
+  return res
+
+def build_occurrence_table(occurrence, certain_tokens = False, f_0_mult = None):
   print('\\begin{tabular}{| c | c | c | c |}')
   print('\hline')
   print(' Частота & Участки & Кол-во битовых интервалов & Отношение к $f_0$ \\\\')
@@ -48,8 +72,8 @@ def build_occurrence_table(occurrence, certain_tokens = False):
     row = f"$f_{{{cur_index}}}$ & "
     row += key if certain_tokens else "1"*key + " и " + "0"*key
     row += f" & {occurrence[key]} & "
-    row += f"$f_0 / "
-    row += str(len(key)) if certain_tokens else str(key)
+    row += f"$f_0 "
+    row += f"* {str(f_0_mult[cur_index-1])}" if certain_tokens else f"/ {str(key)}"
     row += "$ \\\\"
     print(row)
     cur_index += 1
@@ -65,25 +89,25 @@ def get_f_mean_math(occurrence, mes_len):
   f_mean_str = f_mean_str[:-3] + "$$"
   return f_mean_str
 
-def get_f_mean(occurrence, mes_len, f_0, certain_tokens = False):
+def get_f_mean(occurrence, mes_len, f_0, certain_tokens = False, f_0_mult = None):
   res = 0
+  i = 0
   for key in occurrence:
-    l = len(key) if certain_tokens else key
+    l = 1 / f_0_mult[i] if certain_tokens else key
     res += occurrence[key] / mes_len * f_0 / l
+    i += 1
   return int(res)
 
-def get_f_mean_table(occurrence, mes_len, certain_tokens = False):
+def get_f_mean_table(occurrence, mes_len, certain_tokens = False, f_0_mult = None):
   print('\\begin{center}')
   print('\\begin{tabular}{| c | c |}')
   print('\hline')
   print('Пропускная способность, Mbps & $f_{mean}$, Гц \\\\')
   print('\hline')
-  print(f'10 & {get_f_mean(occurrence, mes_len, f_0[10], certain_tokens)} \\\\')
-  print(f'100 & {get_f_mean(occurrence, mes_len, f_0[100], certain_tokens)} \\\\')
-  print(f'1000 & {get_f_mean(occurrence, mes_len, f_0[1000], certain_tokens)} \\\\')
+  print(f'10 & {get_f_mean(occurrence, mes_len, f_0[10], certain_tokens, f_0_mult)} \\\\')
+  print(f'100 & {get_f_mean(occurrence, mes_len, f_0[100], certain_tokens, f_0_mult)} \\\\')
+  print(f'1000 & {get_f_mean(occurrence, mes_len, f_0[1000], certain_tokens, f_0_mult)} \\\\')
   print('\hline')
   print('\\end{tabular}')
   print('\\end{center}')
-
-
 

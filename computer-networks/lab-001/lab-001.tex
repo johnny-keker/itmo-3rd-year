@@ -38,11 +38,11 @@
 \newcommand{\specialcell}[2][l]{%
   \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
-\newcommand{\bandwidthEntry}[1]{
+\newcommand{\bandwidthEntry}[2]{
   \hline
   \multicolumn{2}{|c|}{Пропускная способность: #1 Mbps} \\
   \hline
-  Частота основной гармоники сигнала \texttt{11111...} & 0 Гц \\
+  Частота основной гармоники сигнала \texttt{11111...} & \py{int(f_0[#1] * #2)} Гц \\
   Верхняя граница частот в передаваемом сообщении & \py{int(max_mult * f_0[#1])} Гц \\
   Нижняя граница частот в передаваемом сообщении & \py{int(f_0[#1] / max_count)} Гц \\
   Необходимая полоса пропускания & \py{int(f_0[#1] / max_count)} : \py{int(max_mult * f_0[#1])} Гц \\
@@ -178,9 +178,9 @@ $$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_
 \newpage
 
 \begin{tabular}{| c | c |}
-  \bandwidthEntry{10}
-  \bandwidthEntry{100}
-  \bandwidthEntry{1000}
+  \bandwidthEntry{10}{0}
+  \bandwidthEntry{100}{0}
+  \bandwidthEntry{1000}{0}
   \hline
 \end{tabular}
 
@@ -189,13 +189,65 @@ $$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_
 \begin{pycode}
 occurrence = get_occurrence_counts(nrz_string)
 build_occurrence_table(occurrence)
-\end{pycode}
 
-\begin{pycode}
 mes_len = len(nrz_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
 \end{pycode}
 
+\subsection{Манчестерское кодирование}
 
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{manchester}
+    \caption{Кодирование первых четырех байт Манчестерским кодом}
+  \end{center}
+\end{figure}
+
+\begin{pycode}
+man_string = '110100011110000011110000111001101110010111100010111100011110101'\
+  '011101000111010010010000011001000001011101100000000101110'
+max_count = 1
+max_mult = 14
+\end{pycode}
+
+Из диаграммы легко понять, что $T_{min}$ достигается при кодировании последовательных
+одинаковых бит (\texttt{00} или \texttt{11}), при этом $T_{min} = T_0 / 2$ 
+и $f_{max} = 2 f_0$. $T_{max}$ возникает в следствие кодирования чередующихся
+бит (\texttt{01} и \texttt{10}) и равен $f_0$. Сигнал вида \texttt{11111...} или
+\texttt{00000...} аналогичен последовательности сигналов \texttt{11}, следовательно
+частота его основной гармоники равна $f_{max}$.
+
+Разложение в ряд Фурье для сигнала представляющего из себя последовательность
+единиц или нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi 2 f_0 t) + (A_0 / 3) \sin(2 \pi 6 f_0 t) +
+  (A_0 / 5) \sin(2 \pi 10 f_0 t) + (A_0 / 7) \sin(2 \pi 14 f_0 t)$$
+
+Аналогичное разложение для сигнала с чередующимися последовательностями из
+единиц и нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi f_0 t) + (A_0 / 3) \sin(2 \pi 3 f_0 t) +
+  (A_0 / 5) \sin(2 \pi 5 f_0 t) + (A_0 / 7) \sin(2 \pi 7 f_0 t)$$
+
+Получаем спектр частот $f_0 ... 14 f_0$
+
+\begin{tabular}{| c | c |}
+  \bandwidthEntry{10}{2}
+  \bandwidthEntry{100}{2}
+  \bandwidthEntry{1000}{2}
+  \hline
+\end{tabular}
+
+\subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
+
+\begin{pycode}
+#occurrence = get_certain_tokens_occerrence(man_string, [['11', '00'], ['10', '01']])
+occurrence = f_mean_man_nz(man_string)
+build_occurrence_table(occurrence, True, [2, 1])
+
+mes_len = len(man_string)
+print(get_f_mean_math(occurrence, mes_len))
+get_f_mean_table(occurrence, mes_len, True, [2, 1])
+\end{pycode}
 \end{document}
