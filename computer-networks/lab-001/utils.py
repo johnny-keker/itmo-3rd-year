@@ -147,3 +147,14 @@ def build_4b5b_table():
     print('\hline')
   print('\\end{tabular}')
 
+def format_message(s):
+  i = 0
+  row = '\\texttt{'
+  while True:
+    row += s[i:i+8] if i+8 <= len(s) else s[i:]
+    row += ' '
+    i += 8
+    if i >= len(s):
+      break
+  row += "}"
+  return row
