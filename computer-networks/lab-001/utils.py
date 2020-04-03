@@ -158,3 +158,27 @@ def format_message(s):
       break
   row += "}"
   return row
+
+def scrembling57(code):
+  b = [0 for i in range(len(code))]
+  print('\\begin{tabular}{| c | c | c | c |}')
+  print('\hline')
+  for i in range(0, len(code)):
+
+    if (i < 5):
+      b[i] = int(code[i])
+      if i < 32:    
+        print(f'$B_{{{i}}}$ & $A_{{{i}}}$ & \\texttt{{{b[i]}}} & \\texttt{{{b[i]}}}\\\\')
+        print('\hline')
+    elif (i < 7):
+      b[i] = int(code[i]) ^ b[i-5]
+      if i < 32:
+        print(f'$B_{{{i}}}$ & $A_{{{i}}} \\oplus B_{{{i-5}}}$ & \\texttt{{{code[i]}}} $\\oplus$ \\texttt{{{b[i-5]}}} & \\texttt{{{b[i]}}}\\\\')
+        print('\hline')
+    else:
+      b[i] = int(code[i]) ^ b[i-5] ^ b[i-7]
+      if i < 32:
+        print(f'$B_{{{i}}}$ & $A_{{{i}}} \\oplus B_{{{i-5}}} \\oplus B_{{{i-7}}}$ & \\texttt{{{code[i]}}} $\\oplus$ \\texttt{{{b[i-5]}}} $\\oplus$ \\texttt{{{b[i-7]}}} & \\texttt{{{b[i]}}}\\\\')
+        print('\hline')
+  print('\\end{tabular}')
+  return "".join([str(x) for x in b])

@@ -417,8 +417,6 @@ $$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_
 
 Получаем спектр частот $\frac{f_0}{\py{max_count}}...7 f_0$.
 
-\newpage
-
 \begin{tabular}{| c | c |}
   \bandwidthEntry{10}{0}
   \bandwidthEntry{100}{0}
@@ -436,4 +434,74 @@ mes_len = len(m_4b5b)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
 \end{pycode}
+
+\subsection{Скремблирование 5-7}
+
+Для скремблирования был выбран полином $A_i \oplus B_{i-5} \oplus B_{i-7}$,
+так как по сравнению с полиномом 3-5 интервалы меньшей длины занимают больше
+битовых интервалов.
+
+\begin{pycode}
+scrembling_str = scrembling57(m)
+\end{pycode}
+
+Результат скремблирования:\\
+\py{format_message(scrembling_str)}
+
+\subsubsection*{Физическое кодирование}
+
+Для кодирования полученного сообщения будем использовать потенциальный код NRZ.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{nrz_scr}
+    \caption{Кодирование первых четырех байт потенциальным кодом NRZ}
+  \end{center}
+\end{figure}
+
+\begin{pycode}
+[max_count, max_char] = longest_substing(scrembling_str)
+mes_len = len(scrembling_str)
+max_mult = 7
+\end{pycode}
+
+Из диаграммы легко понять, что $T_{min}$ достигается при кодировании чередующихся
+сигналов, из чего следует, что $T_{min} = T_0$ и $f_{max} = f_0$. Для определения
+$T_{max}$ найдем участок с минимальным чередованием. Для данного вида кодирования
+такой участок достигается при передаче последовательности из \py{max_count}
+символов \texttt{\py{max_char}},
+следовательно $T_{max} = \py{max_count} T_0$, а $f_{min} = \frac{f_0}{\py{max_count}}$.
+
+Разложение в ряд Фурье для сигнала представляющего из себя последовательность
+чередующихся единиц и нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi f_0 t) + (A_0 / 3) \sin(2 \pi 3 f_0 t) +
+  (A_0 / 5) \sin(2 \pi 5 f_0 t) + (A_0 / 7) \sin(2 \pi 7 f_0 t)$$
+
+Аналогичное разложение для сигнала с чередующимися последовательностями из
+\py{max_count} единиц и нулей будет иметь вид:
+
+$$A_0 \sin(2 \pi \frac{f_0}{\py{max_count}} t) + (A_0 / 3) \sin(2 \pi \frac{3 f_0}{\py{max_count}} t) +
+  (A_0 / 5) \sin(2 \pi \frac{5 f_0}{\py{max_count}} t) + (A_0 / 7) \sin(2 \pi \frac{7 f_0}{\py{max_count}} t)$$
+
+Получаем спектр частот $\frac{f_0}{\py{max_count}}...7 f_0$.
+
+\begin{tabular}{| c | c |}
+  \bandwidthEntry{10}{0}
+  \bandwidthEntry{100}{0}
+  \bandwidthEntry{1000}{0}
+  \hline
+\end{tabular}
+
+\subsubsection*{Определение среднего значения чаcтоты передаваемого сообщения}
+
+\begin{pycode}
+occurrence = get_occurrence_counts(scrembling_str)
+build_occurrence_table(occurrence)
+
+mes_len = len(scrembling_str)
+print(get_f_mean_math(occurrence, mes_len))
+get_f_mean_table(occurrence, mes_len)
+\end{pycode}
+
 \end{document}
