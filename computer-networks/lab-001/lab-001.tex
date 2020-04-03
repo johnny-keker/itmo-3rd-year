@@ -433,6 +433,7 @@ build_occurrence_table(occurrence)
 mes_len = len(m_4b5b)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
+f_mean_4b5b = round(((max_mult * f_0[1000]) - (f_0[1000] / max_count)) / 1000000000, 2)
 \end{pycode}
 
 \subsection{Скремблирование 5-7}
@@ -502,6 +503,32 @@ build_occurrence_table(occurrence)
 mes_len = len(scrembling_str)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
+f_mean_scr = round(((max_mult * f_0[1000]) - (f_0[1000] / max_count)) / 1000000000, 2)
 \end{pycode}
+
+\subsection{Сравнение логических методов кодирования}
+
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c |}
+  \hline
+  Тип & Ст-ть & \specialcell[c]{
+    В-ть\\
+    рассхинхрон.
+  } & Помехоустойчивость & \specialcell[c]{
+    Полоса\\
+    пропускания
+  } & Избыточность \\
+  \hline
+  4B5B & min & сред & Запрещен. комбинации & \py{f_mean_4b5b} ГГц & 25\% \\
+  \hline
+  Скремблинг & max & сред & Нет & \py{f_mean_scr} & 0\% \\
+  \hline
+\end{tabular}
+\end{center}
+
+Для данного сообщения метод кодирования 4B5B будет более удачным. Не смотря на
+то, что он имеет 25\% избыточности (что с учетом размера сообщения совсем не много),
+он дешевле в реализации и обладает свойством выявления ошибок за счет запрещенных
+комбинаций, помимо этого он обладает немного меньшей необходимой шириной пропускания.
 
 \end{document}
