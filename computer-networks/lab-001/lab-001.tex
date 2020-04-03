@@ -193,6 +193,7 @@ build_occurrence_table(occurrence)
 mes_len = len(nrz_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len)
+f_mean_nrz = round(((max_mult * f_0[1000]) - (f_0[1000] / max_count)) / 1000000000, 2)
 \end{pycode}
 
 \subsection{Манчестерское кодирование}
@@ -249,6 +250,7 @@ build_occurrence_table(occurrence, True, [2, 1])
 mes_len = len(man_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len, True, [2, 1])
+f_mean_man = round(((max_mult * f_0[1000]) - (f_0[1000] / max_count)) / 1000000000, 2)
 \end{pycode}
 
 \newpage
@@ -308,6 +310,7 @@ build_occurrence_table(occurrence, True, [2, 1])
 mes_len = len(man_string)
 print(get_f_mean_math(occurrence, mes_len))
 get_f_mean_table(occurrence, mes_len, True, [2, 1])
+f_mean_rz = round(((max_mult * f_0[1000]) - (f_0[1000] / max_count)) / 1000000000, 2)
 \end{pycode}
 
 \subsection{Пятиуровневый код PAM-5}
@@ -380,7 +383,34 @@ $$f_{mean} = 6 / 32 * f_1 + 20 / 32 * f_2 + 6 / 32 * f_3$$
 \end{center}
 
 \subsection{Сравнительный анализ физического кодирования}
-TODO: сравнительно проанализировать
+
+\begin{center}
+\begin{tabular}{| c | c | c | c |}
+  \hline
+  Вид & Стоимость & Самосинхронизация & Полоса пропускания\\
+  \hline
+  Манчестр. & Мин. & Да & \py{f_mean_man} ГГц\\
+  NRZ & Мин. & Нет & \py{f_mean_nrz} ГГц\\
+  RZ & Сред. & Да & \py{f_mean_rz} ГГц\\
+  2BQ1 & Макс. & Нет & 1.7 ГГц\\
+  \hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+  \item Манчестерское: Не требует синхронизации, требует более широкую полосу
+    пропускания чем 2BQ1 и NRZ.
+  \item NRZ: Средняя ширина необходимой полосы пропускания, вероятность ошибок
+    при передаче длинных последовательностей нулей и единиц.
+  \item RZ: Обладает самосинхронизацией, однако дороже в реализации предыдущих
+    из-за трех уровней сигнала и широкой необходимой полосы пропускания.
+  \item 2BQ1: Самая узкая полоса пропускания, четыре уровня сигнала делают его
+    самым дорогим видом кодирования из представленных.
+\end{itemize}
+
+Можно сделать вывод, что оптимальным методом кодирования для данного сообщения
+будет манчестерский, так как не смотря на широкую необходимую полосу пропускания,
+он обладает свойством самосинхронизации и минимальной стоимостью.
 
 \section{Логическое кодирование}
 
