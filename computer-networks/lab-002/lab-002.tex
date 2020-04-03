@@ -20,6 +20,8 @@
 \fancyhead{}
 \usepackage{ragged2e}
 
+\usepackage{multirow}
+
 \usepackage{listings}
 \lstdefinestyle{lablisting}{
   basicstyle=\scriptsize\ttfamily,
@@ -31,9 +33,8 @@
   showstringspaces=false
 }
 
-
 \newcommand{\specialcell}[2][l]{%
-  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
 \begin{document}
 
@@ -64,5 +65,114 @@
 \justify
 
 \section{Цель}
+
+Исследование влияния свойств канала связи на качество передачи сигналов при
+различных методах физического и логического кодирования, используемых в цифровых
+сетях передачи данных.
+
+\section{Задание}
+
+Для заданного исходного сообщения и заданных методов кодирования выполнить
+исследование качества передачи физических сигналов в зависимости от уровня
+шумов в канале связи, уровня рассинхронизации передатчика и приемника и уровня
+граничного напряжения. Сравнить расссматриваемые методы кодирования, выбрать и
+обосновать наилучший метод для передачи исходного сообщения по реальному каналу
+связи.
+
+\section{Ход работы}
+
+\subsection{Исходные данные}
+
+\begin{tabular}{ l l }
+  \textit{Сообщение:} & \texttt{Сарж} \\
+  \textit{Hex-код:} & \texttt{D1 E0 F0 E6} \\
+  \textit{Bin-код:} & \texttt{11010001 11100000 11110000 11100110} \\
+  \textit{Длина:} & 4 байта (32 бита)
+\end{tabular}
+
+\subsection{Результаты исследования}
+
+\newpage
+
+\begin{table}[h]
+\caption{Результаты исследований}
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c | c | c | c |}
+  \hline
+  \multicolumn{3}{|c|}{\multirow{2}{*}{HEX: \texttt{D1 E0 F0 E6}}} & \multicolumn{6}{|c|}{Метод кодирования}\\
+  \cline{4-9}
+  \multicolumn{3}{|c|}{} & NRZ & RZ & AMI & M-II & 4B/5B & Scramb\\
+  \hline
+  \multirow{4}{*}{\specialcell[c]{
+      Полоса\\
+      пропускания\\
+      идеального\\
+      канала связи
+    }} & \multirow{2}{*}{Гармоники} & мин & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{3-9}
+  & & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{2-9}
+  & \multirow{2}{*}{Частоты, МГц} & мин & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{3-9}
+  & & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{3}{|c|}{\specialcell[c]{
+      Минимальная полоса пропускания\\
+      идеального канала связи
+    }} & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{Уровень шума} & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{\specialcell[c]{
+      Уровень\\
+      рассинхронизации
+    }} & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{\specialcell[c]{
+      Уровень граничного\\
+      напряжения
+    }} & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{3}{|c|}{\specialcell[c]{
+      \% ошибок при max уровнях и мини-\\
+      мальной полосе пропускания КС
+    }} & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{Уровень шума} & ср & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{\specialcell[c]{
+      Уровень\\
+      рассинхронизации
+    }} & ср & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{2}{|c|}{\specialcell[c]{
+      Уровень граничного\\
+      напряжения
+    }} & ср & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multirow{4}{*}{\specialcell[c]{
+      Полоса\\
+      пропускания\\
+      идеального\\
+      канала связи
+    }} & \multirow{2}{*}{Гармоники} & мин & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{3-9}
+  & & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{2-9}
+  & \multirow{2}{*}{Частоты, МГц} & мин & 0 & 0 & 0 & 0 & 0 & 0\\
+  \cline{3-9}
+  & & макс & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  \multicolumn{3}{|c|}{\specialcell[c]{
+      Требуемая полоса пропускания\\
+      реального канала связи
+    }} & 0 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+\end{tabular}
+\end{center}
+\label{Tab:res}
+\end{table}
+
+\section{Вывод}
 
 \end{document}
