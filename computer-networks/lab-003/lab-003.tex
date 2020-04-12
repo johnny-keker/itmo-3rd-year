@@ -1,0 +1,76 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[a4paper, includeheadfoot, mag=1000, left=2cm, right=1.5cm, top=1.5cm, bottom=1.5cm, headsep=0.8cm, footskip=0.8cm]{geometry}
+% Fonts
+\usepackage{fontspec, unicode-math}
+\setmainfont[Ligatures=TeX]{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[english, russian]{babel}
+% Indent first paragraph
+\usepackage{indentfirst}
+\setlength{\parskip}{5pt}
+% Diagrams
+\usepackage{graphicx}
+\usepackage{float}
+% Page headings
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%\newfontfamily\namefont[Scale=1.2]{Gloria Hallelujah}
+\fancyhead{}
+\usepackage{ragged2e}
+
+\usepackage{multirow}
+
+\usepackage{listings}
+\lstdefinestyle{lablisting}{
+  basicstyle=\scriptsize\ttfamily,
+  numbers=left,
+  stepnumber=1,
+  otherkeywords={EOF, O\_RDONLY, STDIN\_FILENO, STDOUT\_FILENO, STDERR\_FILENO},
+  numbersep=10pt,
+  showspaces=false,
+  showstringspaces=false
+}
+
+\newcommand{\specialcell}[2][l]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+\begin{center}
+
+\textsc{Национальный исследовательский университет ИТМО\\[4mm]
+Факультет программной инженерии и компьютерной техники}
+\vfill
+\textbf{Учебно-исследовательская работа №3\\[4mm]
+по дисципение Сети ЭВМ и телекоммуникации\\[4mm]
+Анализ трафика компьютерных сетей утилитой Wireshark\\[16mm]
+}
+\begin{flushright}
+Студент: Саржевский Иван
+\\[2mm]Группа: P3302
+\end{flushright}
+\vfill
+г. Санкт-Петербург\\[2mm]
+2020 г.
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\justify
+
+\section{Цель}
+
+Цель работы – изучить структуру протокольных блоков данных, анализируя реальный
+трафик на компьютере студента с помощью бесплатно распространяемой утилиты
+\texttt{Wireshark}.
+
+\section{Утилита \texttt{ping}}
+
+\end{document}
