@@ -33,8 +33,24 @@
   showstringspaces=false
 }
 
+\graphicspath{ {images/} }
+
 \newcommand{\specialcell}[2][l]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\newcommand{\fig}[4]{
+  \begin{figure}[h]
+    \includegraphics[scale=#4]{#1}
+    \caption{#2}
+    \label{fig:#3}
+  \end{figure}
+}
+
+\newcommand{\figc}[4]{
+  \begin{center}
+    \fig{#1}{#2}{#3}{#4}
+  \end{center}
+}
 
 \begin{document}
 
@@ -72,5 +88,51 @@
 \texttt{Wireshark}.
 
 \section{Утилита \texttt{ping}}
+
+Для анализа трафика, создаваемого утилитой \texttt{ping} был выбран сайт
+\textbf{\texttt{www.ias.ru}}.
+
+\figc{ping_headers}{Заголовки протоколов для команды \texttt{ping}.}{p_h}{3.0}
+
+На рисунке \ref{fig:p_h} изображены заголовки различных протоколов, используемых
+при передаче запроса.
+
+\subsection{Фрейм}
+
+\figc{ping_frame}{Информация о фрейме команды \texttt{ping}.}{p_f}{3.0}
+
+Структура, представленная на рисунке \ref{fig:p_f}, описывает метаданные
+Wireshark для этого запроса - его порядковый номер среди всех записанных,
+время прибытия, размер, протокол и цвет выделения в интерфейсе.
+
+\subsection{Ethernet II}
+
+Ethernet II - протокол канального уровня, т.е. описывает передачу данных в
+рамках локальной сети. Типичная структура кадра Ethernet II представлена в
+таблице \ref{Tab:ethernet_frame}.
+
+\begin{table}[h]
+\begin{center}
+\begin{small}
+  \begin{tabular}{| c | c | c | c | c |}
+    \hline
+    \multicolumn{5}{|c|}{\specialcell[c]{Кадр Ethernet II\\ (от 64-х до 1528-ти байт)}}\\
+    \hline
+    \multicolumn{3}{|c|}{\specialcell[c]{MAC-заголовок\\ (14 байт)}} & \specialcell[c]{Данные\\ (от 46-ти до 1500 байт)} & --\\
+    \hline
+    \specialcell[c]{MAC получателя\\ (6 байт)} & \specialcell[c]{MAC отправителя\\ (6 байт)} & \specialcell[c]{Тип протокола\\ (2 байта)} & Данные & \specialcell[c]{CRC\\ (4 байта)}\\
+    \hline
+  \end{tabular}
+  \caption{Структура кадра Ethernet II.}
+  \label{Tab:ethernet_frame}
+\end{small}
+\end{center}
+\end{table}
+
+В данном случае получателем выступает роутер, а отправителем - рабочая машина,
+их MAC-адреса записаны в кадр, тип протокола - \texttt{IPv4}, что можно увидеть
+на рисунке \ref{fig:p_e}.
+
+\figc{ping_ethernet}{Кадр Ethernet II для \texttt{ping}.}{p_e}{3.0}
 
 \end{document}
