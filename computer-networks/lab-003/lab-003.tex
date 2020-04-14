@@ -220,6 +220,35 @@ IPv4 - протокол сетевого уровня. Подробные све
     \texttt{0120   f6 f7 f8 f9 fa fb fc fd fe \textbf{FF 00} 01 02 03 04 05}\\
 \end{enumerate}
 
-%\section{Анализ трафика утилиты \texttt{traceroute}}
+\section{Анализ трафика утилиты \texttt{traceroute}}
+
+Утилита \texttt{traceroute} отправляет \texttt{UDP}-запросы, постепенно увеличивая
+\texttt{ttl}, на 1 каждые 3 запроса.
+
+\figc{trace_headers}{Заголовки протоколов для команды \texttt{traceroute}.}{t_f}{3.0}
+
+На рисунке \ref{fig:t_f} изображены заголовки различных протоколов, используемых при
+передаче запроса.
+
+Все протоды, кроме \texttt{UDP}, были описаны для команды \texttt{ping}.
+
+\subsection{User Datagram Protocol}
+
+\texttt{UDP} - один из протоколов транспортного уровня, который предполагает отсутствие
+механизмов установления и поддержки соединения между отправителем и получателем.
+Структура \texttt{UDP}-датаграммы представлена в таблице \ref{Tab:udp}.
+
+
+\begin{table}[h]
+\begin{center}
+  \caption{Структура \texttt{UDP}-датаграммы.}
+  \begin{tabular}{| c | c | c | c |}
+    \hline
+    Порт отправителя & Порт получателя & Длина датаграммы & Данные\\
+    \hline
+  \end{tabular}
+  \label{Tab:udp}
+\end{center}
+\end{table}
 
 \end{document}
