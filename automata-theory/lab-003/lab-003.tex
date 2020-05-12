@@ -1,0 +1,155 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[a4paper, includeheadfoot, mag=1000, left=2cm, right=1.5cm, top=1.5cm, bottom=1.5cm, headsep=0.8cm, footskip=0.8cm]{geometry}
+% Fonts
+\usepackage{fontspec, unicode-math}
+\setmainfont[Ligatures=TeX]{CMU Serif}
+\setmonofont{CMU Typewriter Text}
+\usepackage[english, russian]{babel}
+% Indent first paragraph
+\usepackage{indentfirst}
+\setlength{\parskip}{5pt}
+% Diagrams
+\usepackage{graphicx}
+\usepackage{float}
+% Page headings
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%\newfontfamily\namefont[Scale=1.2]{Gloria Hallelujah}
+\fancyhead{}
+
+\usepackage{amsmath}
+
+\graphicspath{ {images/} }
+
+\usepackage{listings}
+\lstdefinestyle{lablisting}{
+  basicstyle=\scriptsize\ttfamily,
+  numbers=left,
+  stepnumber=1,
+  otherkeywords={EOF, O\_RDONLY, STDIN\_FILENO, STDOUT\_FILENO, STDERR\_FILENO},
+  numbersep=10pt,
+  showspaces=false,
+  showstringspaces=false
+}
+
+\newcommand{\specialcell}[2][l]{%
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+\begin{center}
+
+\textsc{Национальный исследовательский университет ИТМО\\[4mm]
+Факультет программной инженерии и компьютерной техники}
+\vfill
+\textbf{Практическое задание №3\\[4mm]
+по дисципение Теория Автоматов\\[4mm]
+Канонический метод структурного синтеза\\[4mm]
+}
+\textit{Вариант 11\\[16mm]}
+\begin{flushright}
+Студент: Саржевский Иван
+\\[2mm]Группа: P3302
+\\[2mm]Преподаватель: Тропченко Александр Ювенальевич
+\end{flushright}
+\vfill
+г. Санкт-Петербург\\[2mm]
+2020 г.
+
+\end{center}
+\end{titlepage}
+
+\section*{Цель}
+
+Практическое освоение метода перехода от абстрактного автомата
+к структурному автомату.
+
+\section*{Задание}
+
+Абстрактный автомат задан табличным способом. Причем абстрактный
+автомат Мили представлен таблицами переходов и выходов, а абстрактный
+автомат Мура - одной отмеченной таблицей переходов. Для синтеза
+структурного автомата использовать функционально полную систему
+логических элементов И, ИЛИ, НЕ и автомат Мура, обладающий полнотой
+переходов и полнотой выходов. Синтезированный структурный автомат
+представить в виде ПАМЯТИ и КОМБИНАЦИОННОЙ СХЕМЫ.
+
+\section*{Исходные данные}
+
+Согласно полученному варианту исходный автомат Мура задается
+следующей таблицей переходов: 
+
+\begin{center}
+  \includegraphics{task.png}
+\end{center}
+
+\section*{Кодирование исходного автомата двоичными кодами}
+
+\subsection*{Входной алфавит}
+
+\begin{tabular}{| c | c |}
+  \hline
+  & $x_1$\\
+  \hline
+  $z_1$ & \texttt{0}\\
+  $z_2$ & \texttt{1}\\
+  \hline
+\end{tabular}
+
+\subsection*{Выходной алфавит}
+
+\begin{tabular}{| c | c | c |}
+  \hline
+  & $y_1$ & $y_2$\\
+  \hline
+  $w_1$ & \texttt{0} & \texttt{0}\\
+  $w_2$ & \texttt{0} & \texttt{1}\\
+  $w_3$ & \texttt{1} & \texttt{0}\\
+  $w_4$ & \texttt{1} & \texttt{1}\\
+  \hline
+\end{tabular}
+
+\subsection*{Состояния}
+
+\begin{tabular}{| c | c | c | c |}
+  \hline
+  & $Q_1$ & $Q_2$ & $Q_3$\\
+  \hline
+  $a_1$ & \texttt{0} & \texttt{0} & \texttt{0}\\
+  $a_2$ & \texttt{0} & \texttt{0} & \texttt{1}\\
+  $a_3$ & \texttt{0} & \texttt{1} & \texttt{0}\\
+  $a_4$ & \texttt{0} & \texttt{1} & \texttt{1}\\
+  $a_5$ & \texttt{1} & \texttt{0} & \texttt{0}\\
+  $a_6$ & \texttt{1} & \texttt{0} & \texttt{1}\\
+  $a_7$ & \texttt{1} & \texttt{1} & \texttt{0}\\
+  $a_8$ & \texttt{1} & \texttt{1} & \texttt{1}\\
+  \hline
+\end{tabular}
+
+\section*{Таблицы переходов и выходов соответствующего структурного автомата}
+
+После кодирования исходного абстрактного автомата
+Мура построим таблицы переходов и выходов структурного автомата.
+
+\begin{tabular}{|*{9}{c|}}
+  \hline
+  $x_1/Q_1Q_2Q_3$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111\\\hline
+  0 & 100 & 101 & 111 & 100 & 000 & 001 & 011 & 110\\\hline
+  1 & 001 & 010 & 111 & 110 & 110 & 111 & 111 & 111\\\hline
+\end{tabular}
+
+\begin{tabular}{|*{9}{c|}}
+  \hline
+  $x_1/Q_1Q_2Q_3$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111\\\hline
+  0 & 01 & 00 & 00 & 01 & 00 & 10 & 00 & 11\\\hline
+  1 & 01 & 00 & 00 & 01 & 00 & 10 & 00 & 11\\\hline
+   & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$\\\hline
+\end{tabular}
+
+\section*{Вывод}
+
+\end{document}
