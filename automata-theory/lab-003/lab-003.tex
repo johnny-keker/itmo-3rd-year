@@ -13,6 +13,10 @@
 \usepackage{float}
 % Page headings
 \usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{array}
+
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{16pt}
@@ -241,6 +245,96 @@ TODO: нарисовать
 
 Результирующее слово совпадает с ожидаемым.
 
+\section*{Синтез автомата на RS-триггерах}
+
+С учетом закона функционирования RS–триггера построим таблицу сигналов функций возбуждения:
+
+\noindent
+\begin{footnotesize}
+\begin{tabular}{|c|*{9}{>{\centering\arraybackslash}p{1.5cm}|}}
+  \hline
+  $x_1/Q_1Q_2Q_3$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111\\\hline
+  0 & 01/-0/-0 & 01/-0/0- & 01/0-/01 & 01/10/10 & 10/-0/-0 & 10/-0/0- & 10/0-/01 & 0-/0-/10\\\hline
+  1 & -0/-0/01 & -0/01/10 & 01/0-/01 & 01/0-/10 & 0-/01/-0 & 0-/01/0- & 0-/0-/01 & 0-/0-/0-\\\hline
+   & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$ & $R_1S_1$/ $R_2S_2$/ $R_3S_3$\\\hline
+\end{tabular}
+\end{footnotesize}
+
+ДНФ для сигналов функций возбуждения:
+
+\begin{align*}
+  R_1 &= \bar{x_1}Q_1\bar{Q_2}\bar{Q_3} \lor \bar{x_1}Q_1\bar{Q_2}Q_3 \lor \bar{x_1}Q_1Q_2\bar{Q_3} = 4 \lor 5 \lor 6\\
+  S_1 &= \bar{x_1}\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor \bar{x_1}\bar{Q_1}\bar{Q_2}Q_3 \lor \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}\bar{Q_1}Q_2Q_3 \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1\bar{Q_1}Q_2Q_3 =\\
+  &= 0 \lor 1 \lor 2 \lor 3 \lor 10 \lor 11\\
+  R_2 &= \bar{x_1}\bar{Q_1}Q_2Q_3 = 3\\
+  S_2 &= x_1\bar{Q_1}\bar{Q_2}Q_3 \lor x_1Q_1\bar{Q_2}\bar{Q_3} \lor x_1Q_1\bar{Q_2}Q_3 = 9 \lor 12 \lor 13\\
+  R_3 &= \bar{x_1}\bar{Q_1}Q_2Q_3 \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1\bar{Q_1}\bar{Q_2}Q_3 \lor x_1\bar{Q_1}Q_2Q_3 = 3 \lor 7 \lor 9 \lor 11\\
+  S_3 &= \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}Q_1Q_2\bar{Q_3} \lor x_1\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1Q_1Q_2\bar{Q_3} = 2 \lor 6 \lor 8 \lor 10 \lor 14
+\end{align*}
+
+\subsection*{Функциональная схема структурного автомата на RS-триггерах}
+
+TODO: нарисовать
+
+\subsection*{Тестирование функциональной схемы автомата}
+
+\begin{center}
+  \begin{tabular}{| l  l |}
+    \hline
+    Слово & \footnotesize{\texttt{1..0..0..1..0..1..0..1..0..0..0..0..0..1..0..1..0..0..0..1..0..1..0..0..0..0..1..1..1}}\\
+    Ожид. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\
+    Резул. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\\hline
+  \end{tabular}
+\end{center}
+
+Результирующее слово совпадает с ожидаемым.
+
+\section*{Синтез автомата на JK-триггерах}
+
+С учетом закона функционирования JK–триггера построим таблицу сигналов функций возбуждения:
+
+\noindent
+\begin{tabular}{|c|*{9}{>{\centering\arraybackslash}p{1.5cm}|}}
+  \hline
+  $x_1/Q_1Q_2Q_3$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111\\\hline
+  0 & 1-/0-/0- & 1-/0-/-0 & 1-/-0/1- & 1-/-1/-1 & -1/0-/0- & -1/0-/-0 & -1/-0/1- & -0/-0/-1\\\hline
+  1 & 0-/0-/1- & 0-/1-/-1 & 1-/-0/1- & 1-/-0/-1 & -0/1-/0- & -0/1-/-0 & -0/-0/1- & -0/-0/-0\\\hline
+   & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$ & $J_1K_1$/ $J_2K_2$/ $J_3K_3$\\\hline
+\end{tabular}
+
+ДНФ для сигналов функций возбуждения:
+
+\begin{align*}
+  J_1 &= \bar{x_1}\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor \bar{x_1}\bar{Q_1}\bar{Q_2}Q_3 \lor \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}\bar{Q_1}Q_2Q_3 \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1\bar{Q_1}Q_2Q_3 =\\
+  &= 0 \lor 1 \lor 2 \lor 3 \lor 10 \lor 11\\
+  K_1 &= \bar{x_1}Q_1\bar{Q_2}\bar{Q_3} \lor \bar{x_1}Q_1\bar{Q_2}Q_3 \lor \bar{x_1}Q_1Q_2\bar{Q_3} = 4 \lor 5 \lor 6\\
+  J_2 &= x_1\bar{Q_1}\bar{Q_2}Q_3 \lor x_1Q_1\bar{Q_2}\bar{Q_3} \lor x_1Q_1\bar{Q_2}Q_3 = 9 \lor 12 \lor 13\\
+  K_2 &= \bar{x_1}\bar{Q_1}Q_2Q_3 = 3\\
+  J_3 &= \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}Q_1Q_2\bar{Q_3} \lor x_1\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1Q_1Q_2\bar{Q_3} = 2 \lor 6 \lor 8 \lor 10 \lor 14\\
+  K_3 &= \bar{x_1}\bar{Q_1}Q_2Q_3 \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1\bar{Q_1}\bar{Q_2}Q_3 \lor x_1\bar{Q_1}Q_2Q_3 = 3 \lor 7 \lor 9 \lor 11
+\end{align*}
+
+\subsection*{Функциональная схема структурного автомата на JK-триггерах}
+
+TODO: нарисовать
+
+\subsection*{Тестирование функциональной схемы автомата}
+
+\begin{center}
+  \begin{tabular}{| l  l |}
+    \hline
+    Слово & \footnotesize{\texttt{1..0..0..1..0..1..0..1..0..0..0..0..0..1..0..1..0..0..0..1..0..1..0..0..0..0..1..1..1}}\\
+    Ожид. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\
+    Резул. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\\hline
+  \end{tabular}
+\end{center}
+
+Результирующее слово совпадает с ожидаемым.
+
 \section*{Вывод}
+
+В ходе выполнения работы был изучен канонический метод структурного синтеза,
+получены практические навыки преобразования абстрактного автомата Мура в
+структурный автомат на D-, T-, RS- и JK-триггерах.
 
 \end{document}
