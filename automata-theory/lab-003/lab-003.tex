@@ -150,6 +150,58 @@
    & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$ & $y_1y_2$\\\hline
 \end{tabular}
 
+\section*{ДНФ для выходных сигналов}
+
+По полученным таблицам построим ДНФ для каждого выходного сигнала:
+
+\begin{align*}
+  y_1 &= \bar{x_1}Q_1\bar{Q_2}Q_3 \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1Q_1\bar{Q_2}Q_3 \lor x_1Q_1Q_2Q_3 = 5 \lor 7 \lor 13 \lor 15\\
+  y_2 &= \bar{x_1}\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor \bar{x_1}\bar{Q_1}Q_2Q_3 \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor x_1\bar{Q_1}Q_2Q_3 \lor x_1Q_1Q_2Q_3\\
+    &= 0 \lor 3 \lor 7 \lor 8 \lor 11 \lor 15
+\end{align*}
+
+\section*{Синтез автомата на D-триггерах}
+
+С учетом закона функционирования D–триггера построим таблицу сигналов функций возбуждения:
+
+\noindent
+\begin{tabular}{|*{9}{c|}}
+  \hline
+  $x_1/Q_1Q_2Q_3$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111\\\hline
+  0 & 100 & 101 & 111 & 100 & 000 & 001 & 011 & 110\\\hline
+  1 & 001 & 010 & 111 & 110 & 110 & 111 & 111 & 111\\\hline
+   & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$ & $D_1D_2D_3$\\\hline
+\end{tabular}
+
+ДНФ для сигналов функций возбуждения:
+
+\begin{align*}
+  D_1 &= \bar{x_1}\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor \bar{x_1}\bar{Q_1}\bar{Q_2}Q_3 \lor \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}\bar{Q_1}Q_2Q_3 \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1\bar{Q_1}Q_2Q_3 \lor\\
+  & \lor x_1Q_1\bar{Q_2}\bar{Q_3} \lor x_1Q_1\bar{Q_2}Q_3 \lor x_1Q_1Q_2\bar{Q_3} \lor x_1Q_1Q_2Q_3 =\\
+  & = 0 \lor 1 \lor 2 \lor 3 \lor 7 \lor 10 \lor 11 \lor 12 \lor 13 \lor 14 \lor 15\\
+  D_2 &= \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}Q_1Q_2\bar{Q_3} \lor \bar{x_1}Q_1Q_2Q_3 \lor x_1\bar{Q_1}\bar{Q_2}Q_3 \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor x_1\bar{Q_1}Q_2Q_3 \lor x_1Q_1\bar{Q_2}\bar{Q_3} \lor\\
+  & \lor x_1Q_1\bar{Q_2}Q_3 \lor x_1Q_1Q_2\bar{Q_3} \lor x_1Q_1Q_2Q_3 = 2 \lor 6 \lor 7 \lor 9 \lor 10 \lor 11 \lor 12 \lor 13 \lor 14 \lor 15\\
+  D_3 &= \bar{x_1}\bar{Q_1}\bar{Q_2}Q_3 \lor \bar{x_1}\bar{Q_1}Q_2\bar{Q_3} \lor \bar{x_1}Q_1\bar{Q_2}Q_3 \lor \bar{x_1}Q_1Q_2\bar{Q_3} \lor x_1\bar{Q_1}\bar{Q_2}\bar{Q_3} \lor x_1\bar{Q_1}Q_2\bar{Q_3} \lor \\
+  & \lor x_1Q_1\bar{Q_2}Q_3 \lor x_1Q_1Q_2\bar{Q_3} \lor x_1Q_1Q_2Q_3 = 1 \lor 2 \lor 5 \lor 6 \lor 8 \lor 10 \lor 13 \lor 14 \lor 15
+\end{align*}
+
+\subsection*{Функциональная схема структурного автомата на D-триггерах}
+
+TODO: нарисовать
+
+\subsection*{Тестирование функциональной схемы автомата}
+
+\begin{center}
+  \begin{tabular}{| l  l |}
+    \hline
+    Слово & \footnotesize{\texttt{1..0..0..1..0..1..0..1..0..0..0..0..0..1..0..1..0..0..0..1..0..1..0..0..0..0..1..1..1}}\\
+    Ожид. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\
+    Резул. & \footnotesize{\texttt{-- 00 10 00 00 11 11 00 11 00 01 00 01 00 00 01 00 01 00 01 00 10 11 00 01 00 01 00 00 11}}\\\hline
+  \end{tabular}
+\end{center}
+
+Результирующее слово совпадает с ожидаемым.
+
 \section*{Вывод}
 
 \end{document}
